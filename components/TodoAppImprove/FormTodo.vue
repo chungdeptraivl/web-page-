@@ -2,25 +2,29 @@
   <div class="">
     <div class="header-todo">
       <form-modal :edit="editTask" class="my-3" />
-      <b-input-group class="search-todo">
-        <b-form-input
-          placeholder="Search task"
-        ></b-form-input>
-        <b-input-group-append>
-          <b-button
-            size="sm"
-            text="Button"
-            variant="success"
-            style="font-weight: bold; color: #fff"
-            >Search</b-button
-          >
-        </b-input-group-append>
-      </b-input-group>
+      <b-form>
+        <b-input-group class="search-todo">
+          <b-form-input
+            v-model="searchValue"
+            placeholder="Search task"
+          ></b-form-input>
+          <b-input-group-append>
+            <b-button
+              size="sm"
+              text="Button"
+              variant="success"
+              style="font-weight: bold; color: #fff"
+              @click="searchBtn"
+              >{{ $t('search_btn') }}</b-button
+            >
+          </b-input-group-append>
+        </b-input-group>
+      </b-form>
     </div>
     <b-table
       ref="selectableTable"
-      style="background-color: #eee; border-radius: 8px; overflow: hidden"
-      :items="items"
+      class="tableTodoList"
+      :items="searchResults.length > 0 ? searchResults : items"
       :fields="fields"
       :select-mode="selectMode"
       responsive="sm"
@@ -36,14 +40,14 @@
             style="font-weight: bold; color: #000"
             @click="clickEdit(data.item)"
           >
-            Edit
+            {{ $t('edit_btn') }}
           </b-button>
           <b-button
             variant="danger"
             style="font-weight: bold; color: #000"
             @click="clickDelete(data.item.id)"
           >
-            Delete
+            {{ $t('delete_btn') }}
           </b-button>
         </div>
       </template>
@@ -65,7 +69,7 @@
         variant="primary"
         style="font-weight: bold; color: #fff"
         @click="selectAllRows"
-        >Select all</b-button
+        >{{ $t('select_all_btn') }}</b-button
       >
       <b-button
         size="sm"
@@ -73,21 +77,29 @@
         variant="info"
         style="font-weight: bold; color: #fff"
         @click="clearSelected"
-        >Clear selected</b-button
+        >{{ $t('clear_selected_btn') }}</b-button
+      >
+      <b-button
+        size="sm"
+        class="p-2 ml-3"
+        variant="secondary"
+        style="font-weight: bold; color: #fff"
+        @click="clickDeleteAll"
+        >{{ $t('clear_all_selected_btn') }}</b-button
       >
       <b-button
         size="sm"
         class="p-2 ml-3"
         variant="dark"
         style="font-weight: bold; color: #fff"
-        @click="clickDeleteAll"
-        >Clear All Selected</b-button
+        @click="backTaskTable"
+        >{{ $t('back_task_table') }}</b-button
       >
     </p>
-    <p>
+    <!-- <p>
       Selected Rows:<br />
       {{ selected }}
-    </p>
+    </p> -->
   </div>
 </template>
 
@@ -102,7 +114,24 @@ export default {
       items: [],
       selectMode: 'multi',
       selected: [],
+      searchValue: '',
+      searchResults: [],
     }
+  },
+
+  watch: {
+    searchValue(newValue) {
+      // eslint-disable-next-line no-console
+      console.log(newValue)
+      const results = this.items.filter((item) => {
+        if (item.name.includes(newValue)) {
+          return item
+        }
+        return results
+      })
+      // eslint-disable-next-line no-console
+      console.log(results)
+    },
   },
 
   created() {
@@ -135,11 +164,33 @@ export default {
       // eslint-disable-next-line no-console
       console.log(this.editTask)
     },
+    backTaskTable() {
+      this.searchResults = []
+      this.searchValue = ""
+    },
+    searchBtn() {
+      const results = this.items.filter((item) => {
+        return (item.name).toLowerCase().includes(this.searchValue.toLowerCase())
+      })
+      this.searchResults = results
+      // eslint-disable-next-line no-console
+      console.log(this.searchResults)
+      this.searchValue = ""
+    },
   },
 }
 </script>
 
 <style scoped>
+.tableTodoList {
+  background-color: #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tableTodoList::last-child {
+  text-align: right;
+}
 .header-todo {
   display: flex;
   align-items: center;
@@ -147,6 +198,6 @@ export default {
 }
 
 .search-todo {
-  max-width: 500px;
+  width: 500px;
 }
 </style>

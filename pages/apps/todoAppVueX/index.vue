@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2 class="text-center my-5">My Todo List Improve</h2>
+    <h2 class="text-center my-5">{{ $t('todo_improve_header') }}</h2>
     <form-todo />
   </div>
 </template>

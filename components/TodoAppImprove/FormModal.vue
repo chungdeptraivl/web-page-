@@ -4,7 +4,7 @@
       v-b-modal.modal-prevent-closing
       variant="success"
       style="font-weight: bold; color: #fff"
-      >Add</b-button
+      >{{ $t('add_btn') }}</b-button
     >
     <b-modal
       id="modal-prevent-closing"
@@ -63,7 +63,7 @@ export default {
       name: '',
       nameState: null,
       submittedNames: [],
-      statusOptions: ['New', 'In-progress', 'Done'],
+      statusOptions: ['New', 'Im-progress', 'Done'],
     }
   },
 
@@ -88,7 +88,7 @@ export default {
       this.nameState = null
     },
     handleOk(bvModalEvent) {
-      if (this.list.name.length === 0) return
+      if (this.list.name.length === 0 || this.list.status.length === 0 || this.list.description.length === 0 ) return
       // eslint-disable-next-line no-console
       console.log(this.list)
       this.$store.dispatch('clickAdd', this.list)

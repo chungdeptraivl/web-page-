@@ -1,6 +1,6 @@
 <template>
   <div id="root">
-    <h2 class="header text-center mt-3">This is the Home Page</h2>
+    <h2 class="header text-center mt-5">{{ $t('home_header') }}</h2>
   </div>
 </template>
 

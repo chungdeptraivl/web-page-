@@ -1,6 +1,8 @@
 <template>
   <div>
-    <b-button v-b-modal.modal-prevent-closing>Add</b-button>
+    <b-button v-b-modal.modal-prevent-closing class="btn-todo">{{
+      $t('add_btn')
+    }}</b-button>
 
     <b-modal
       id="modal-prevent-closing"
@@ -17,8 +19,6 @@
             v-model="list.name"
             type="text"
             required
-            :value="inputTask"
-            :validate="specialCharacters"
           ></b-form-input>
         </b-form-group>
 
@@ -44,13 +44,12 @@
 
 <script>
 export default {
-
   props: {
     edit: {
       type: Object,
       default: null,
-    }
-  }, 
+    },
+  },
 
   data() {
     return {
@@ -74,7 +73,7 @@ export default {
       } else {
         this.list = {}
       }
-    }
+    },
   },
 
   methods: {
@@ -115,17 +114,13 @@ export default {
         this.$bvModal.hide('modal-prevent-closing')
       })
     },
-
-    specialCharacters(rule, value, callback) {
-      if (/^[a-zA-Z0-9]*$/.test(value) && value !== "") {
-        this.test = true
-        callback()
-      } else {
-        this.test = false
-        // eslint-disable-next-line n/no-callback-literal
-        callback("This is a special character")
-      }
-    }
   },
 }
 </script>
+
+<style>
+.btn-todo {
+  color: #fff;
+  font-weight: bold;
+}
+</style>

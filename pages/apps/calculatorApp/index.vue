@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>This is Calculator App</h3>
+    <h2 class="text-center my-5">{{ $t('calculator_app_header') }}</h2>
   </div>
 </template>
 

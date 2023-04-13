@@ -38,7 +38,32 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/i18n',
   ],
+
+  i18n: {
+    // danh sách các ngôn ngữ được hỗ trợ, bao gồm mã ngôn ngữ, tên ngôn ngữ và tệp chứa các thông tin địa phương hóa.
+    locales: [
+      {
+        code: 'en',
+        name: 'English',
+        file: 'en-US.js',
+      },
+      {
+        code: 'vi',
+        name: 'Tiếng Việt',
+        file: 'vi-VN.js',
+      },
+    ],
+    // ngôn ngữ mặc định của ứng dụng.
+    defaultLocale: 'en',
+    // cấu hình cho thư viện Vue I18n.
+    vueI18n: {
+      fallbackLocale: 'en',
+    },
+    lazy: true,
+    langDir: 'lang/',
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

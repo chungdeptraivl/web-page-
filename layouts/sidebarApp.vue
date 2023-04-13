@@ -13,35 +13,43 @@
             class="mr-4 p-2"
             style="font-size: 1.05rem; font-weight: bold"
             href="/"
-            >Home</b-nav-item
+            >{{ $t('home_item') }}</b-nav-item
           >
           <b-nav-item
             class="mr-4 p-2"
             style="font-size: 1.05rem; font-weight: bold"
             href="apps"
-            >My Apps</b-nav-item
+            >{{ $t('app_item') }}</b-nav-item
           >
           <b-nav-item
             class="mr-4 p-2"
             style="font-size: 1.05rem; font-weight: bold"
             href="/profile"
-            >My Profile</b-nav-item
+            >{{ $t('profile_item') }}</b-nav-item
           >
         </b-navbar-nav>
-      </b-collapse> 
+      </b-collapse>
     </b-navbar>
+    <language-change class="change-language" />
     <nuxt />
   </div>
 </template>
 
 <script>
-
-import Sidebar from "@/components/sidebar.vue"
+import Sidebar from '@/components/sidebar.vue'
+import LanguageChange from '~/components/LanguageChange.vue'
 
 export default {
-    Sidebar
+  components: { LanguageChange, Sidebar },
 }
 </script>
 
 <style scoped>
+
+.change-language {
+  position: absolute;
+  right: 10px;
+  margin-top: 10px;
+}
 </style>
+

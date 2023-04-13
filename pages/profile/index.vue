@@ -1,7 +1,7 @@
 <template>
-  <main class="main">
-    <h2>helehlee</h2>
-  </main>
+  <div>
+    <h2 class="text-center my-5">{{ $t('profile_header') }}</h2>
+  </div>
 </template>
 
 <script>
