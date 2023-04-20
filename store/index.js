@@ -17,7 +17,7 @@ export const state = () => ({
     {
       id: 2,
       name: 'Task 2',
-      status: 'Im-progress',
+      status: 'In-progress',
       description: 'Task 2 description',
     },
     {
@@ -25,6 +25,24 @@ export const state = () => ({
       name: 'Task 3',
       status: 'Done',
       description: 'Task 3 description',
+    },
+    {
+      id: 4,
+      name: 'ReactJs',
+      status: 'New',
+      description: 'ReactJs description',
+    },
+    {
+      id: 5,
+      name: 'VueJs ',
+      status: 'In-progress',
+      description: 'VueJs description',
+    },
+    {
+      id: 6,
+      name: 'NuxtJs',
+      status: 'Done',
+      description: 'NuxtJs description',
     },
   ],
 })

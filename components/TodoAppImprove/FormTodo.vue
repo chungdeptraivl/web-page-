@@ -20,6 +20,15 @@
           </b-input-group-append>
         </b-input-group>
       </b-form>
+      <div>
+        <b-form-select
+          v-model="sortOption"
+          :options="statusOptions"
+          selected-variant="primary"
+          class="form-control"
+          @change="onSortOptionChanged"
+        ></b-form-select>
+      </div>
     </div>
     <b-table
       ref="selectableTable"
@@ -116,6 +125,13 @@ export default {
       selected: [],
       searchValue: '',
       searchResults: [],
+      sortOption: null,
+      statusOptions: [
+        { value: null, text: 'Sort By Status' },
+        'New',
+        'In-progress',
+        'Done',
+      ],
     }
   },
 
@@ -125,6 +141,18 @@ export default {
       console.log(newValue)
       const results = this.items.filter((item) => {
         if (item.name.includes(newValue)) {
+          return item
+        }
+        return results
+      })
+      // eslint-disable-next-line no-console
+      console.log(results)
+    },
+    sortOption(newValue) {
+      // eslint-disable-next-line no-console
+      console.log(newValue)
+      const results = this.items.filter((item) => {
+        if (item.status.includes(newValue)) {
           return item
         }
         return results
@@ -149,12 +177,27 @@ export default {
     clearSelected() {
       this.$refs.selectableTable.clearSelected()
     },
+    validateInput(event) {},
     clickDelete(id) {
+      // const searchIndex = this.searchResults.findIndex((item) => item.id === id)
+      // if (searchIndex > -1) {
+      //   this.searchResults.splice(searchIndex, 1)
+      // } else {
+      //   const itemIndex = this.items.findIndex((item) => item.id === id)
+      //   if (itemIndex > -1) {
+      //     this.items.splice(itemIndex, 1)
+      //   }
+      // }
       // eslint-disable-next-line no-console
       console.log(id)
       this.$store.dispatch('deleteTask', id)
     },
     clickDeleteAll() {
+      // if (this.searchResults.length > 0) {
+      //   this.searchResults.splice(0, this.searchResults.length)
+      // } else {
+      //   this.items.splice(0, this.items.length)
+      // }
       // eslint-disable-next-line no-console
       console.log(this.selected)
       this.$store.dispatch('deleteSelected', this.selected)
@@ -166,16 +209,26 @@ export default {
     },
     backTaskTable() {
       this.searchResults = []
-      this.searchValue = ""
+      this.searchValue = ''
+      this.sortOption = null
     },
     searchBtn() {
       const results = this.items.filter((item) => {
-        return (item.name).toLowerCase().includes(this.searchValue.toLowerCase())
+        return item.name.toLowerCase().includes(this.searchValue.toLowerCase())
       })
       this.searchResults = results
       // eslint-disable-next-line no-console
       console.log(this.searchResults)
-      this.searchValue = ""
+      this.searchValue = ''
+    },
+    onSortOptionChanged() {
+      const results = this.items.filter((item) => {
+        return item.status.includes(this.sortOption)
+      })
+      this.searchResults = results
+      // eslint-disable-next-line no-console
+      console.log(this.searchResults)
+      // this.sortOption = ''
     },
   },
 }
@@ -195,9 +248,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .search-todo {
-  width: 500px;
+  width: 700px;
 }
 </style>

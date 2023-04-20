@@ -20,9 +20,10 @@
             id="name-input"
             v-model="list.name"
             type="text"
-            vali
             required
+            v-on:input="checkValidate"
           ></b-form-input>
+          <p v-if="showError" style="color: red"> No using special chart </p> 
         </b-form-group>
 
         <b-form-group label="Status:">
@@ -57,13 +58,14 @@ export default {
       list: {
         id: Math.floor(Math.random() * 10000),
         name: '',
-        status: '',
+        status: 'New',
         description: '',
       },
       name: '',
       nameState: null,
       submittedNames: [],
-      statusOptions: ['New', 'Im-progress', 'Done'],
+      statusOptions: ['New', 'In-progress', 'Done'],
+      showError: false,
     }
   },
 
@@ -78,8 +80,17 @@ export default {
   },
 
   methods: {
+    checkValidate() {
+      const regex = /[!@#$%^&*(),.?":{}|<>]/g ;
+      if( regex.test(this.list.name)) {
+        this.showError = true;
+      }
+      else {
+        this.showError = false;
+      }
+    },
     checkFormValidity() {
-      const valid = this.$refs.form.checkValidity()
+      const valid = this.$refs.form.checkValidity() 
       this.nameState = valid
       return valid
     },
@@ -88,7 +99,12 @@ export default {
       this.nameState = null
     },
     handleOk(bvModalEvent) {
-      if (this.list.name.length === 0 || this.list.status.length === 0 || this.list.description.length === 0 ) return
+      if (
+        this.list.name.length === 0 ||
+        this.list.status.length === 0 ||
+        this.list.description.length === 0
+      )
+        return
       // eslint-disable-next-line no-console
       console.log(this.list)
       this.$store.dispatch('clickAdd', this.list)
